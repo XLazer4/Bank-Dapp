@@ -5,8 +5,9 @@ import "hardhat/console.sol";
 
 contract Bank {
     
-    uint256 balance;
-    address owner;
+    uint256 public balance;
+    address public owner;
+    string public bankname;
     mapping(address => uint256) customerbalance;
 
     constructor() {
@@ -19,6 +20,11 @@ contract Bank {
         customerbalance[msg.sender] += msg.value;
         console.log("%s",msg.sender," deposited ",msg.value);
     }
+
+    function setBankName(string memory _name) external {
+        require(msg.sender == owner, "You must be the owner to set the name of the bank");
+        bankname = _name;
+    } 
 
     function viewbalance() external view returns(uint256)
     {
